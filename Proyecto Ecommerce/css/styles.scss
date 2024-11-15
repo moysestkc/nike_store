@@ -1,0 +1,217 @@
+$fontFamily:"DM Sans", sans-serif;
+$mainColor:#212121;
+$fontSize:15px;
+$fontWeight:300;
+$width:100%;
+$secondaryColor:#ffffff;
+$borderRadius:5px;
+$colorButton:#ff2f2f;
+@mixin flexbox($justify-content: center, $align-items: center) {
+    display: flex;
+    justify-content: $justify-content;
+    align-items: $align-items;
+}
+@mixin box-shadow($x: 0, $y: 4px, $blur: 8px, $spread: 0, $color: rgba(0, 0, 0, 0.1)) {
+    box-shadow: $x $y $blur $spread $color;
+}
+@mixin button($bgColor, $textColor, $borderRadius: 5px) {
+    width: 90%;
+    background-color: $bgColor;
+    color: $textColor;
+    padding: 10px;
+    border: none;
+    border-radius: $borderRadius;
+    cursor: pointer;
+    font-size: clamp(.8rem, 1.5vw, 2rem);
+}
+%rounded {
+    border-radius: $borderRadius;
+  }
+body{
+    width: $width;
+    font-family:$fontFamily;
+    font-size:$fontSize;
+    font-weight: $fontWeight;
+    margin: 0;
+}
+.header{
+    width: $width;
+    padding: 30px;
+    background-color:$mainColor;
+    box-sizing: border-box;
+    @include flexbox(space-between, center);
+    img{
+        width: 100px;
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+    i img{
+        width: 30px;
+        margin: 10px;
+        padding: 10px;
+    }
+}
+.banner{
+    width: $width;
+    padding: 40px 0px;
+    margin-bottom: 10px;
+    text-align: center;
+    background-image: url("../img/fondobanner.jpg");
+    background-repeat: no-repeat;
+    background-position-y: 50%;
+    background-position-x: left;
+    background-size: cover;
+    color: $secondaryColor;
+    opacity: 0.9;
+    h1{
+        width:$width;
+        font-weight: 700;
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        margin: 0px;
+    }
+    p{
+        width:$width;
+        margin: 0 auto;
+        font-size: clamp(1.5rem, 4vw, 2.5rem);
+        opacity: 0.9;
+    }
+}
+.products{
+    width: 90%;
+    margin: 0px auto;
+    padding: 20px;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));  
+}
+.products__item{
+    cursor:pointer;
+    text-align: center;
+    margin: 15px;
+    padding: 20px;
+    @extend %rounded;
+    @include box-shadow;    
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.products__item--soldout{
+    opacity: .5;
+    filter: brightness(0.8);
+}
+.products__item:hover{
+    transform: scale(1.02);   
+    @include box-shadow(0, 8px, 10px, 0, rgba(0, 0, 0, 0.2));
+}
+.products__img{
+    width: 200px;
+    margin-bottom: 15px;
+    @extend %rounded;
+    @include box-shadow;
+}
+.products__title{
+    font-weight: 500;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+.products__buy{
+    @include button($colorButton, $secondaryColor);
+}
+.products__buy--soldout{
+    @include button(rgb(186, 186, 186), $secondaryColor);
+}
+.cart{
+    width: 400px;
+    height: 100%;
+    background-color:$secondaryColor;
+    padding: 20px;
+    box-sizing: border-box;
+    position: fixed;
+    right: -100%;
+    top: 100px;
+    box-shadow: -20px -2px 20px -15px rgba(0, 0, 0, 0.3);
+    border-top-left-radius: 10px;
+}
+.cart__title{
+    width: $width;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 600;
+    padding: 0px;
+    box-sizing: border-box;
+}
+.cart__products{
+    border-bottom: 1px solid #333;
+    @include flexbox;
+}
+.cart__img{
+    width: 50px;
+    @extend %rounded;
+}
+.cart__icondelete{
+    width: 30px;
+    cursor: pointer;
+}
+.cart__title{
+    padding: 15px;
+    font-size: $fontSize;
+}
+.cart__price{
+    font-weight:$fontWeight;
+}
+@media (max-width: 820px){
+    .header{
+        padding: 15px;
+        img{
+            width: 70px;
+        }
+        i img{
+            width:20px;
+        }
+    }
+    .products{
+        grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+    }
+    .products__img{
+        width: 150px;
+    }
+    .cart{
+        width: 400px;
+        top: 80px;
+    }
+}
+@media (max-width: 420px){
+    .banner{
+        padding: 30px 0;
+        h1{
+            font-size: 18px;
+        }
+        p{
+            font-size: 16px;
+        }
+    }
+    .products{
+        grid-template-columns: 1fr;
+        padding: 10px;
+    }
+    .products__img {
+        width: 100px;
+        max-width: 200px;
+        margin-bottom: 10px;
+    }
+    .products__title,.products__price{
+        padding: 15px;
+    }
+    .cart{
+        width: $width;
+        box-shadow: none;       
+    }
+    .cart__title{
+        padding: 15px 0;
+    }
+    .cart__products{
+        display: flex;
+        flex-direction: column;
+    }
+    .cart__img{
+        width: 100px;
+    }
+}
